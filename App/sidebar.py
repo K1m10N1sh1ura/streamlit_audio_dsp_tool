@@ -27,3 +27,11 @@ def render_sidebar():
         # Update
         st.session_state.signals[i]["name"] = new_name
         st.session_state.signals[i]["active"] = new_state
+
+    st.sidebar.markdown("---")
+    button_html = """
+<a href="https://coff.ee/k1m10n1sh1ura" target="_blank">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" style="height: 51px !important;width: 217px !important;" >
+</a>
+"""
+    st.sidebar.markdown(button_html, unsafe_allow_html=True)
