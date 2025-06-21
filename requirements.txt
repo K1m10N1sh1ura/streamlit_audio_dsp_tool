@@ -1,6 +1,5 @@
-streamlit
 numpy
+plotly
 scipy
-matplotlib
 soundfile
-librosa
+streamlit
