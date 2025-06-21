@@ -1,5 +1,5 @@
 import streamlit as st
-from App import state_handler
+from . import state_handler
 
 def render_sidebar():
     # Logo
