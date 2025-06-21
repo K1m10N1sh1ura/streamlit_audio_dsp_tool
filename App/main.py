@@ -1,6 +1,10 @@
-# App
 import streamlit as st
+from App import sidebar, plots
 
-# UI Layout
-st.write("My first Streamlit app 🎈")
-my_upload = st.sidebar.file_uploader("Upload file", type=[".wav"])
+st.set_page_config(page_title="AudioLab", layout="wide")
+
+# Sidebar (Upload + Signal-Steuerung)
+sidebar.render_sidebar()
+
+# Plotbereich
+plots.render_plot()
