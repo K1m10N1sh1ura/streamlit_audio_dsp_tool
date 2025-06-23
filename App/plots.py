@@ -9,17 +9,16 @@ def render_plot():
     with tab1:
         fig_signal = go.Figure()
         for signal in st.session_state.signals:
-            if signal["active"]:
-                # Zeitvektor berechnen
-                N = len(signal["data"])
-                t = np.arange(N) / signal["fs"]
-                fig_signal.add_trace(go.Scatter(
-                    x=t,
-                    y=signal["data"],
-                    mode="lines",
-                    name=signal["name"],
-                    line=dict(color=signal["color"])
-                ))
+            # Zeitvektor berechnen
+            N = len(signal["data"])
+            t = np.arange(N) / signal["fs"]
+            fig_signal.add_trace(go.Scatter(
+                x=t,
+                y=signal["data"],
+                mode="lines",
+                name=signal["name"],
+                line=dict(color=signal["color"])
+            ))
         fig_signal.update_layout(
             title="AudioLab Signalplot",
             xaxis_title="Time [s]",
@@ -32,18 +31,17 @@ def render_plot():
     with tab2:
         fig_spectrum = go.Figure()
         for signal in st.session_state.signals:
-            if signal["active"]:
-                N = len(signal["data"])
-                freq = np.fft.rfftfreq(N, d=1.0/signal["fs"])
-                fft_magnitude = np.abs(np.fft.rfft(signal["data"]))
+            N = len(signal["data"])
+            freq = np.fft.rfftfreq(N, d=1.0/signal["fs"])
+            fft_magnitude = np.abs(np.fft.rfft(signal["data"]))
 
-                fig_spectrum.add_trace(go.Scatter(
-                    x=freq,
-                    y=20 * np.log10(fft_magnitude + 1e-12),
-                    mode="lines",
-                    name=signal["name"],
-                    line=dict(color=signal["color"])
-                ))
+            fig_spectrum.add_trace(go.Scatter(
+                x=freq,
+                y=20 * np.log10(fft_magnitude + 1e-12),
+                mode="lines",
+                name=signal["name"],
+                line=dict(color=signal["color"])
+            ))
         fig_spectrum.update_layout(
             title="Spectrum (FFT Magnitude)",
             xaxis_title="Frequency [Hz]",
@@ -55,10 +53,10 @@ def render_plot():
 
     with tab3:
         st.markdown("### Spectrogram")
-        active_signals = [s for s in st.session_state.get("signals", []) if s["active"]]
+        active_signals = st.session_state.get("signals", [])
 
         if not active_signals:
-            st.warning("No active signals to display.")
+            st.warning("No signals to display.")
         else:
             signal_names = [s["name"] for s in active_signals]
             selected_signal_name = st.selectbox(

@@ -40,29 +40,23 @@ def render_sidebar():
     # Signal-Liste anzeigen
     st.sidebar.markdown("### Signals")
     for i, signal in enumerate(st.session_state.signals):
-        col1, col2, col3 = st.sidebar.columns([0.5, 0.2, 0.3])
+        col1, col2 = st.sidebar.columns([0.7, 0.3])
 
         # Textfeld links
         new_name = col1.text_input("", value=signal["name"], key=f"name_{i}")
-
-        # Toggle rechts
-        new_state = col2.toggle("Show", value=signal["active"], key=f"toggle_{i}")
 
         # Play/Pause Button
         play_key = f"play_{i}"
         if play_key not in st.session_state:
             st.session_state[play_key] = False
-        if col3.button("▶️" if not st.session_state[play_key] else "⏸️", key=f"play_button_{i}"):
-            # Toggle Play/Pause
+        if col2.button("▶️" if not st.session_state[play_key] else "⏸️", key=f"play_button_{i}"):
             st.session_state[play_key] = not st.session_state[play_key]
 
-        # Audio abspielen, wenn Play aktiv
         if st.session_state[play_key]:
             st.sidebar.audio(signal["data"], sample_rate=signal["fs"])
 
         # Update
         st.session_state.signals[i]["name"] = new_name
-        st.session_state.signals[i]["active"] = new_state
 
     st.sidebar.markdown("---")
     button_html = """
